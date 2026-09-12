@@ -1,0 +1,360 @@
+.jpg<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Věra Novotná — Vzpomínka</title>
+<style>
+
+  :root{
+    --paper: #F0EDE4;
+    --card:  #FAF7EF;
+    --ink:   #2A2E28;
+    --moss:  #5C6B52;
+    --brass: #A8834F;
+    --line:  #D9D2C0;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif", Georgia, serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- typografie ---------- */
+  h1, h2, .display{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero{
+    padding: 64px 24px 40px;
+    text-align: center;
+  }
+
+  .portrait{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    object-fit: cover;
+    object-position: center 5%;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 12px 28px -12px rgba(42,46,40,0.35);
+  }
+
+  .name{
+    font-size: clamp(2.1rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .dates{
+    margin-top: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  .epitaph{
+    margin-top: 22px;
+    font-style: italic;
+    color: var(--moss);
+    font-size: 1.02rem;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- oddělovač: větvička ---------- */
+  .sprig{
+    display:flex;
+    justify-content:center;
+    margin: 44px 0;
+    color: var(--moss);
+    opacity: 0.75;
+  }
+  .sprig svg{ width: 92px; height: 22px; }
+
+  /* ---------- sekce ---------- */
+  section{
+    padding: 0 0 8px;
+  }
+
+  section + section{ margin-top: 8px; }
+
+  .section-inner{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+
+  h2.section-title{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  p{ margin-bottom: 14px; font-size: 1.03rem; }
+  p:last-child{ margin-bottom: 0; }
+
+  /* ---------- záliby jako "tagy" ---------- */
+  .interests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .interest{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--paper);
+  }
+
+  /* ---------- galerie ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery img{
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.76rem;
+    color: var(--moss);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ---------- patička ---------- */
+  footer{
+    text-align: center;
+    padding: 56px 24px 72px;
+  }
+
+  .candle{ width: 34px; height: 34px; margin: 0 auto 18px; color: var(--brass); }
+
+  .dedication{
+    font-style: italic;
+    color: var(--moss);
+    font-size: 0.98rem;
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 3px;
+  }
+
+  /* ---------- jemné najetí při scrollu ---------- */
+  .fade-in{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fade-in{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 420px){
+    .section-inner{ padding: 26px 20px; }
+    header.hero{ padding: 48px 20px 32px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <img class="portrait" src="Fotky-Vera/Portret-VN-1960.jpg" alt="Portrét Věry Novotné">
+    <h1 class="name display">Věra Novotná, rozená Slavíková</h1>
+    <p class="dates">1942 – 2026</p>
+    <p class="epitaph"></p>
+  </header>
+
+  <div class="sprig" aria-hidden="true">
+    <svg viewBox="0 0 92 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 11 H90" stroke="currentColor" stroke-width="1"/>
+      <path d="M46 11 C44 6 40 4 36 4 C40 8 43 10 46 11 C43 12 40 14 36 18 C40 18 44 16 46 11Z" fill="currentColor" opacity="0.9"/>
+      <circle cx="46" cy="11" r="1.6" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ================= ŽIVOT ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Život</p>
+      <h2 class="section-title">Cílevědomá žena a dáma</h2>
+      <p></p>Věra Slavíková  se narodila v roce 1942 v Brně, do rodiny cukráře Jana a pomocnice Františky. V roce 1944 přibyla do rodiny setra Jana. Válečné a poválečné období bylo pro rodinu složité, otec byl totálně nasazen a po komunistickém převratu v roce 1948 zbaven živnosti. Věra chodila do mateřské školy k řádovým sestrám voršilkám na Orlí ulici, později na základní školu v centru města. Společně se sestrou si jako děti užívaly relativně klidný městský život.</p> 
+
+</p>To se náhle změnilo v polovině 50. let 20.století, kdy ovdověla babička Františka Wellnerová žijící v domku v Líšni a reálně hrozilo, že místní národní výbor k osaměle ženě žijící v rodinném domku nuceně dosadí další nájemníky (v té době to byla běžná praxe, podobně „dosídlené“ nájemnice v okolních domech žily až do konce 70. let 20.století). Rázná matka Františka rozhodla, že dcery Věra i Jana se k babičce nastěhují, aby se zabránilo nucenému umístění cizích nájemníků. Obě děvčata pak rázem změnila bydliště a každý den dojížděla za školními povinnostmi tramvají kolem Stránské skály do Brna, což v tehdejší době pro sotva -náctileté sestry rozhodně nebylo jednoduché.</p>
+
+</p>V roce 1957  Věra začala studovat Střední zdravotnickou školu v Jaselské ulici  a tu v roce 1961 úspěšně dokončila. Záhy nastoupila jako zdravotní sestra do Vojenské nemocnice v Brně. Zanedlouho poznala v Líšni Milana Novotného, absolventa fakulty stavební VUT a v roce 1963 se za něj provdala. V roce 1965 se jim narodil syn Michal. Po krátké mateřské dovolené (v té době 22 týdnů, s neplaceným volnem maximálně rok) nastoupila zpět na místo zdravotní sestry. Brzy  ale poznala, že náročná práce sestry, směny a víkendové služby se s péčí o dítě příliš neslučují.</p>
+
+</p> Otec Jan jí nabídnul práci ve sběrně surovin v tehdejší Gottwaldově ulici (nyní Cejl).  Byla to práce fyzicky nesmírně namáhavá, v nečistém prostředí, zato dobře placená a s pevnou pracovní dobou. Ve sběrně vydržela až do roku 1971, kdy se jí narodil druhý syn Marek.</p> 
+
+</p>Po druhé mateřské dovolené se jí naskytla příležitost uplatnit původní vzdělání zdravotní sestry a začala pracovat na pečovatelské službě Brno 1. Práce ji bavila, oproti předchozím zaměstnáním šlo o výraznou změnu k lepšímu. Není divu, že s pečovatelskou službou spojila téměř 20 let profesního života až do odchodu na odpočinek.</p>
+
+
+</p>V důchodu se Věra ráda starala o zahrádku, ráda vařila i pekla. Nepřestala se  stýkat s kolegyněmi z pečovatelské služby a spolužačkami ze zdravotní školy. Pomáhala snachám s vnoučaty, pevnou rukou vedla domácnost. Pečovala o manžela, jak se zhoršoval jeho zdravotní stav. Zdraví nakonec zradilo i ji, poslední roky života strávila v péči domova seniorů. </p></p>
+    </div>
+  </section>
+
+  <!-- ================= ZÁLIBY ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Záliby a zajímavosti</p>
+      <h2 class="section-title">Co ji bavilo</h2>
+      <p>Milovala události z „velkého“ světa. Dokázala hodiny sledovat přímé přenosy z královských svateb či pohřbů,  každý rok strávila dva týdny sledováním všech etap Tour de France. Tyto události také dokázala velmi vtipně komentovat, smysl pro sarkastický až černý humor si zachovala až do posledních dnů. Zajímala se o módu, ráda se hezky oblékala. Věci brala tak, jak přicházely a neztrácela nadhled. Nikdy si na nic nestěžovala.
+ </p>
+      <div class="interests">
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERIE ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Fotografie</p>
+      <h2 class="section-title">Ze života</h2>
+      <div class="gallery">
+        <figure>
+          <img src="Fotky-Vera/Prijimani-VN.jpg" alt="První přijímání">
+          <figcaption>První přijímání, 1950</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Vera-a-Jana.jpg" alt="Věra a Jana">
+          <figcaption>Věra a Jana,1951</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Vera/Tanecni-VN.jpg" alt="Taneční">
+          <figcaption>První taneční, 1958</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Vera/Portret-VN-1960.jpg" alt="Portrét 1960">
+          <figcaption>Portrét, 1960</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Vera/Praxe-VN-1.jpg" alt="Praxe s kolegyní, 1960">
+          <figcaption>Praxe s kolegyní, 1960</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Praxe-VN-2.jpg" alt="Praxe s pacientem, 1960">
+          <figcaption>Praxe s pacientem, 1960</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Svatebni-VN.jpg" alt="Svatební, 1963">
+          <figcaption>Svatební foto, 1963</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Svatebni-VN-2.jpg" alt="Svatební s Milanem, 1963">
+          <figcaption>Věra a Milan, svatební foto, 1963</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Kancelar-VN.jpg" alt="V kanceláři, 1990">
+          <figcaption>V kanceláři, 1990</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/S-vnukem-1998.jpg" alt="S vnukem, 1998">
+          <figcaption>S vnukem, 1998</figcaption>
+        </figure>       
+
+        <figure>
+          <img src="Fotky-Vera/Portret-VN-1.jpg" alt="Portrét, 2000">
+          <figcaption>Portrét, 2000</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Portret-VN-3.jpg" alt="Portrét, 2003">
+          <figcaption>Portrét, 2003</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Vera/Portret-VN-4.jpg" alt="Portrét, 2010">
+          <figcaption>Portrét, 2010</figcaption>
+        <figure>
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATIČKA ================= -->
+  <footer class="fade-in">
+    <svg class="candle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2 C13 5 15 6.5 15 9 C15 10.5 13.5 12 12 12 C10.5 12 9 10.5 9 9 C9 6.5 11 5 12 2Z" fill="currentColor"/>
+      <rect x="10" y="12" width="4" height="9" rx="0.5" fill="currentColor" opacity="0.85"/>
+      <rect x="8" y="21" width="8" height="1.6" rx="0.8" fill="currentColor" opacity="0.6"/>
+    </svg>
+    <p class="dedication">S láskou vzpomíná rodina</p>
+    <a class="back-link" href="index.html">← Zpět na rodinnou stránku</a>
+  </footer>
+
+</div>
+
+<script>
+  // jemné najetí sekcí při scrollu (respektuje prefers-reduced-motion přes CSS výše)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

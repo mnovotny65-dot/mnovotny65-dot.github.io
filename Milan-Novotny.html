@@ -1,0 +1,339 @@
+.jpg<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan Novotný — Vzpomínka</title>
+<style>
+
+  :root{
+    --paper: #F0EDE4;
+    --card:  #FAF7EF;
+    --ink:   #2A2E28;
+    --moss:  #5C6B52;
+    --brass: #A8834F;
+    --line:  #D9D2C0;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif", Georgia, serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- typografie ---------- */
+  h1, h2, .display{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero{
+    padding: 64px 24px 40px;
+    text-align: center;
+  }
+
+  .portrait{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    object-fit: cover;
+    object-position: center 5%;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 12px 28px -12px rgba(42,46,40,0.35);
+  }
+
+  .name{
+    font-size: clamp(2.1rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .dates{
+    margin-top: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  .epitaph{
+    margin-top: 22px;
+    font-style: italic;
+    color: var(--moss);
+    font-size: 1.02rem;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- oddělovač: větvička ---------- */
+  .sprig{
+    display:flex;
+    justify-content:center;
+    margin: 44px 0;
+    color: var(--moss);
+    opacity: 0.75;
+  }
+  .sprig svg{ width: 92px; height: 22px; }
+
+  /* ---------- sekce ---------- */
+  section{
+    padding: 0 0 8px;
+  }
+
+  section + section{ margin-top: 8px; }
+
+  .section-inner{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+
+  h2.section-title{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  p{ margin-bottom: 14px; font-size: 1.03rem; }
+  p:last-child{ margin-bottom: 0; }
+
+  /* ---------- záliby jako "tagy" ---------- */
+  .interests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .interest{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--paper);
+  }
+
+  /* ---------- galerie ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery img{
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.76rem;
+    color: var(--moss);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ---------- patička ---------- */
+  footer{
+    text-align: center;
+    padding: 56px 24px 72px;
+  }
+
+  .candle{ width: 34px; height: 34px; margin: 0 auto 18px; color: var(--brass); }
+
+  .dedication{
+    font-style: italic;
+    color: var(--moss);
+    font-size: 0.98rem;
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 3px;
+  }
+
+  /* ---------- jemné najetí při scrollu ---------- */
+  .fade-in{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fade-in{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 420px){
+    .section-inner{ padding: 26px 20px; }
+    header.hero{ padding: 48px 20px 32px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <img class="portrait" src="Fotky-Milan/MN-portret-80.jpg" alt="Portrét Milana Novotného">
+    <h1 class="name display">Ing.Milan Novotný</h1>
+    <p class="dates">1937 – 2023</p>
+    <p class="epitaph"></p>
+  </header>
+
+  <div class="sprig" aria-hidden="true">
+    <svg viewBox="0 0 92 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 11 H90" stroke="currentColor" stroke-width="1"/>
+      <path d="M46 11 C44 6 40 4 36 4 C40 8 43 10 46 11 C43 12 40 14 36 18 C40 18 44 16 46 11Z" fill="currentColor" opacity="0.9"/>
+      <circle cx="46" cy="11" r="1.6" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ================= ŽIVOT ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Život</p>
+      <h2 class="section-title">Muzikant a vápeník</h2>
+      <p></p> Milan Novotný se narodil v Brně do učitelské rodiny, která tou dobou působila ve Starovičkách. Po skončení  2. světové války se přestěhoval s rodiči do Líšně, kde dokončil základní školu. Následovalo studium na Francouzském reálném gymnáziu Opuštěná. Franouzština jej velmi bavila, vynikal v ní a některé francouzské texty si pamatoval po celý život. Po gymnáziu začla studovat na Stavební fakultě VUT v Brně obor Stavební hmoty. Při studiu se mimochodem jako hráč na bicí stal členem hudebního tělesa - swingového big bandu působícího v právě v Líšni. Toto amatérské hudební uskupení úspěšně procházelo celou řadou hudebních soutěží.</p> 
+  
+</p> Počátkem šedesátých let se v Líšni seznámil se svou budoucí ženou Věrou Slavíkovou. V roce 1965 se jim narodil syn Michal, v roce 1971 druhý syn Marek.  Tou dobou již Milan působil ve vápence v Čebíně nejprve jako vedoucí provozu, později jako její ředitel. Čebínská vápenka se stala nedílnou součástí jeho života, pracoval v ní přes 20 let. Měl mezi spolupracovníky řadu přátel, do Čebína se vždy rád vracel i po odchodu na odpočinek.</p> 
+
+</p> V penzi rád chodil na procházky do lesa, věnoval se vnoučatům. Pečoval o své zdraví, denně cvičil, dobře plaval. Staral se o dům, za příznivého počasí seděl na zahradě a svačil oblíbenou kávu a tatranku.
+ </p>
+    </div>
+  </section>
+
+  <!-- ================= ZÁLIBY ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Záliby a zajímavosti</p>
+      <h2 class="section-title">Co jej bavilo</h2>
+      <p>Jako bývalý hudebník (bicí, klavír) měl rád swing, zejména velké orchestry Glenna Millera, Karla Vlacha  či Melody Makers. Miloval Českomoravskou vysočinu, až do pozdního věku si každoročně užíval týden na Milovech. Bavilo jej být ve společnosti,  nevynechal jedinou příležitost zatančit si. Byl pilným čtenářem a častým návštěvníkem líšeňské veřejné knihovny.
+
+ </p>
+      <div class="interests">
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERIE ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Fotografie</p>
+      <h2 class="section-title">Ze života</h2>
+      <div class="gallery">
+        <figure>
+          <img src="Fotky-Milan/MN-Starovicky.jpg" alt="Ve Starovičkách 1941">
+          <figcaption>Ve Starovičkách, 1941</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Milan/MN-maturitni.jpg" alt="Maturitní foto 1955">
+          <figcaption>Maturitní foto, 1955</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Milan/MN-na-kole.jpg" alt="Na kole 1953">
+          <figcaption>Na kole 1953</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Milan/MN-swing.jpg" alt="Big band, 50. léta">
+          <figcaption>Za bicími big bandu, 50. léta</figcaption>
+        </figure>       
+        <figure>
+          <img src="Fotky-Milan/MN-a-Vera-svatba.jpg" alt="Svatba Milana a Věry, 1963">
+          <figcaption>Svatba Milana a Věry, 1963</figcaption>
+        </figure>                    
+        <figure>
+          <img src="Fotky-Milan/MN-Cebin-83.jpg" alt="S kolegy v Čebíně, 1983">
+          <figcaption>S kolegy v Čebíně, 1983</figcaption>
+        </figure>      
+        <figure>
+          <img src="Fotky-Milan/MN-Roma-92.jpg" alt="Řím, 1992">
+          <figcaption>Řím, 1992</figcaption>
+        </figure>    
+        <figure>
+          <img src="Fotky-Milan/MN-doma-99.jpg" alt="Doma, 1999">
+          <figcaption>Doma, 1999</figcaption>
+        </figure>    
+        <figure>
+          <img src="Fotky-Milan/MN-oslava-00.jpg" alt="Na oslavě, 2000">
+          <figcaption>V dobré náladě, 2000</figcaption>
+        </figure> 
+        <figure>
+          <img src="Fotky-Milan/MN-v-kuchyni.jpg" alt="V kuchyni, 2005>
+          <figcaption>Vzácné foto z kuchyně, 2005</figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATIČKA ================= -->
+  <footer class="fade-in">
+    <svg class="candle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2 C13 5 15 6.5 15 9 C15 10.5 13.5 12 12 12 C10.5 12 9 10.5 9 9 C9 6.5 11 5 12 2Z" fill="currentColor"/>
+      <rect x="10" y="12" width="4" height="9" rx="0.5" fill="currentColor" opacity="0.85"/>
+      <rect x="8" y="21" width="8" height="1.6" rx="0.8" fill="currentColor" opacity="0.6"/>
+    </svg>
+    <p class="dedication">S láskou vzpomíná rodina</p>
+    <a class="back-link" href="index.html">← Zpět na rodinnou stránku</a>
+  </footer>
+
+</div>
+
+<script>
+  // jemné najetí sekcí při scrollu (respektuje prefers-reduced-motion přes CSS výše)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

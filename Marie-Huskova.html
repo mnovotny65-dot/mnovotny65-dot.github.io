@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marie Hušková — Vzpomínka</title>
+<style>
+
+  :root{
+    --paper: #F0EDE4;
+    --card:  #FAF7EF;
+    --ink:   #2A2E28;
+    --moss:  #5C6B52;
+    --brass: #A8834F;
+    --line:  #D9D2C0;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif", Georgia, serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- typografie ---------- */
+  h1, h2, .display{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero{
+    padding: 64px 24px 40px;
+    text-align: center;
+  }
+
+  .portrait{
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 12px 28px -12px rgba(42,46,40,0.35);
+  }
+
+  .name{
+    font-size: clamp(2.1rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .dates{
+    margin-top: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  .epitaph{
+    margin-top: 22px;
+    font-style: italic;
+    color: var(--moss);
+    font-size: 1.02rem;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- oddělovač: větvička ---------- */
+  .sprig{
+    display:flex;
+    justify-content:center;
+    margin: 44px 0;
+    color: var(--moss);
+    opacity: 0.75;
+  }
+  .sprig svg{ width: 92px; height: 22px; }
+
+  /* ---------- sekce ---------- */
+  section{
+    padding: 0 0 8px;
+  }
+
+  section + section{ margin-top: 8px; }
+
+  .section-inner{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+
+  h2.section-title{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  p{ margin-bottom: 14px; font-size: 1.03rem; }
+  p:last-child{ margin-bottom: 0; }
+
+  /* ---------- záliby jako "tagy" ---------- */
+  .interests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .interest{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--paper);
+  }
+
+  /* ---------- galerie ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery img{
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.76rem;
+    color: var(--moss);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ---------- patička ---------- */
+  footer{
+    text-align: center;
+    padding: 56px 24px 72px;
+  }
+
+  .candle{ width: 34px; height: 34px; margin: 0 auto 18px; color: var(--brass); }
+
+  .dedication{
+    font-style: italic;
+    color: var(--moss);
+    font-size: 0.98rem;
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 3px;
+  }
+
+  /* ---------- jemné najetí při scrollu ---------- */
+  .fade-in{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fade-in{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 420px){
+    .section-inner{ padding: 26px 20px; }
+    header.hero{ padding: 48px 20px 32px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <img class="portrait" src="Fotky-Marie-H/Marie-Huskova-portret.jpg" alt="Portrét Marie Huškové">
+    <h1 class="name display">Marie Hušková, rozená Slouka</h1>
+    <p class="dates">1887 – 1974</p>
+    <p class="epitaph"></p>
+  </header>
+
+  <div class="sprig" aria-hidden="true">
+    <svg viewBox="0 0 92 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 11 H90" stroke="currentColor" stroke-width="1"/>
+      <path d="M46 11 C44 6 40 4 36 4 C40 8 43 10 46 11 C43 12 40 14 36 18 C40 18 44 16 46 11Z" fill="currentColor" opacity="0.9"/>
+      <circle cx="46" cy="11" r="1.6" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ================= ŽIVOT ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Život</p>
+      <h2 class="section-title">Žena domkaře, trhovkyně, hospodyně</h2>
+      <p></p>Marie Slouka se narodila v Líšni, kde i vyrůstala, provdala se za domkáře Linharta Hušku a přijala jeho příjmení. Bydleli v malém domku se zahradou, manžel Linhart ( později už se uvádí jen jméno Leonard) docházel do Brna pracovat do fabriky na smaltované nádobí a Marie se doma starala o tři děti - Boženu, Jaroslava a Marii.</p>
+
+     </p>Jak bylo v té době běžné, pravidelně chodívala s nůší na zádech na brněnská tržiště prodávat vejce, ovoce a další produkty.  Pro skladování vajec měli ve sklepě vybudováno několik zděných kádí, kde se vejce uchovávala. Obchodu a domácnosti vládla Marie pevnou rukou.
+     Děti postupně opustily rodný dům - Jaroslav se stal příslušníkem  finanční stráže a zamířil mimo Brno, Marie vystudovala učitelský ústav v Brně a posléze začala učitelskou praxi na moravském venkově.</p> 
+
+</p>Dcera Božena zůstala s manželem Tomášem v rodném domě a po úmrtí Leonarda se o matku Marii starala až do konce jejího života. Svou matku ale Božena přežila o pouhé dva roky.</p></p>
+    </div>
+  </section>
+
+  <!-- ================= ZÁLIBY ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Záliby a zajímavosti</p>
+      <h2 class="section-title">Co ji bavilo</h2>
+      <p>Byla zdatnou trhovkyní a  velmi ji oslovovaly hmotné statky všeho druhu. Vzhledem k tomu, že zažila dvě světové války,  nástup komunismu a měnovou reformu, jednalo se o zálibu veskrze užitečnou. Kladný vztah k materiálním hodnotám lze mimochodem vysledovat v jedné větvi jejích potomků až do dnešní doby. </p>
+      <div class="interests">
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERIE ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Fotografie</p>
+      <h2 class="section-title">Ze života</h2>
+      <div class="gallery">
+        <figure>
+          <img src="Fotky-Marie-H/Linhart-Huska-vojak.jpg" alt="Manžel Linhart 1917">
+          <figcaption>Manžel Leonard,1917</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-H/Marie-Huskova-s-detmi.jpg" alt="Marie s dětmi">
+          <figcaption>Marie s dětmi, 1917</figcaption>
+        </figure>
+         <figure>
+          <img src="Fotky-Marie-H/Marie-Huskova-s-vnuky.jpg" alt="Marie s vnuky, asi 1939">
+          <figcaption>Marie s vnuky, asi 1939</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-H/Marie-Huskova-a-Vera.jpg" alt="Marie a Vera">
+          <figcaption>Marie a Věra Slavíková, asi 1963</figcaption>
+        </figure>
+
+
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATIČKA ================= -->
+  <footer class="fade-in">
+    <svg class="candle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2 C13 5 15 6.5 15 9 C15 10.5 13.5 12 12 12 C10.5 12 9 10.5 9 9 C9 6.5 11 5 12 2Z" fill="currentColor"/>
+      <rect x="10" y="12" width="4" height="9" rx="0.5" fill="currentColor" opacity="0.85"/>
+      <rect x="8" y="21" width="8" height="1.6" rx="0.8" fill="currentColor" opacity="0.6"/>
+    </svg>
+    <p class="dedication">S láskou vzpomíná rodina</p>
+    <a class="back-link" href="index.html">← Zpět na rodinnou stránku</a>
+  </footer>
+
+</div>
+
+<script>
+  // jemné najetí sekcí při scrollu (respektuje prefers-reduced-motion přes CSS výše)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

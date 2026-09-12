@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marie Novotná — Vzpomínka</title>
+<style>
+
+  :root{
+    --paper: #F0EDE4;
+    --card:  #FAF7EF;
+    --ink:   #2A2E28;
+    --moss:  #5C6B52;
+    --brass: #A8834F;
+    --line:  #D9D2C0;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif", Georgia, serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- typografie ---------- */
+  h1, h2, .display{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero{
+    padding: 64px 24px 40px;
+    text-align: center;
+  }
+
+  .portrait{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    object-fit: cover;
+    object-position: center 5%;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 12px 28px -12px rgba(42,46,40,0.35);
+  }
+
+  .name{
+    font-size: clamp(2.1rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .dates{
+    margin-top: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  .epitaph{
+    margin-top: 22px;
+    font-style: italic;
+    color: var(--moss);
+    font-size: 1.02rem;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- oddělovač: větvička ---------- */
+  .sprig{
+    display:flex;
+    justify-content:center;
+    margin: 44px 0;
+    color: var(--moss);
+    opacity: 0.75;
+  }
+  .sprig svg{ width: 92px; height: 22px; }
+
+  /* ---------- sekce ---------- */
+  section{
+    padding: 0 0 8px;
+  }
+
+  section + section{ margin-top: 8px; }
+
+  .section-inner{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+
+  h2.section-title{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  p{ margin-bottom: 14px; font-size: 1.03rem; }
+  p:last-child{ margin-bottom: 0; }
+
+  /* ---------- záliby jako "tagy" ---------- */
+  .interests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .interest{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--paper);
+  }
+
+  /* ---------- galerie ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery img{
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.76rem;
+    color: var(--moss);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ---------- patička ---------- */
+  footer{
+    text-align: center;
+    padding: 56px 24px 72px;
+  }
+
+  .candle{ width: 34px; height: 34px; margin: 0 auto 18px; color: var(--brass); }
+
+  .dedication{
+    font-style: italic;
+    color: var(--moss);
+    font-size: 0.98rem;
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 3px;
+  }
+
+  /* ---------- jemné najetí při scrollu ---------- */
+  .fade-in{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fade-in{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 420px){
+    .section-inner{ padding: 26px 20px; }
+    header.hero{ padding: 48px 20px 32px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <img class="portrait" src="Fotky-Marie-N/Portret-MN-2.jpg" alt="Portrét Marie Novotné">
+    <h1 class="name display">Marie Novotná, rozená Hušková</h1>
+    <p class="dates">1909 – 1996</p>
+    <p class="epitaph"></p>
+  </header>
+
+  <div class="sprig" aria-hidden="true">
+    <svg viewBox="0 0 92 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 11 H90" stroke="currentColor" stroke-width="1"/>
+      <path d="M46 11 C44 6 40 4 36 4 C40 8 43 10 46 11 C43 12 40 14 36 18 C40 18 44 16 46 11Z" fill="currentColor" opacity="0.9"/>
+      <circle cx="46" cy="11" r="1.6" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ================= ŽIVOT ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Život</p>
+      <h2 class="section-title">Paní učitelka</h2>
+      <p><p>Marie Hušková se narodila v Líšni do rodiny domkáře a trhovkyně. Je pozoruhodné, že se jí z tohoto prostého prostředí podařilo nastoupit na učitelský ústav (dnešními slovy střední pedagogickou školu) a zdárně ho dokončit.</p>
+
+<p>Poté zahájila učitelskou kariéru a učila na školách ve Vranovicích, Přibicích, Morkůvkách, Brumovicích, Starovičkách a v rodné Líšni. Na škole v Brumovicích se potkala se svým budoucím mužem Aloisem Novotným. Společně pak už jako manželé působili na škole ve Starovičkách, kde se jim roku 1937 narodil syn Milan.</p>
+
+<p>Po skončení druhé světové války se přestěhovali do domku v Líšni, hned vedle domku sestry Boženy. S manželem Aloisem pak učili v Líšni až do konce 60. let 20. století. Marie vyučovala český a ruský jazyk.</p>
+
+<p>Po odchodu na odpočinek se věnovala vnukům a pro své bývalé žáky při příležitosti setkání při životních jubileích vyhledávala ve školních archivech údaje o bývalých spolužácích. Na setkání bývalých žáků (typicky při příležitosti 50. nebo 60. narozenin) bývala také často zvána.</p>
+
+<p>Vynikala pečlivostí, cílevědomostí a pevnou vůlí. Měla ráda přehled, hodně plánovala a vedla si detailní evidenci. Do posledního detailu si naplánovala mimochodem i svůj pohřeb, včetně textu na parte, písní zpívaných v kostele, barvy rakve a květinové výzdoby. To vše jasně, přehledně a krasopisně sepsala. Byla až do konce svého života pilná, skromná a štědrá.</p> </p>
+    </div>
+  </section>
+
+  <!-- ================= ZÁLIBY ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Záliby a zajímavosti</p>
+      <h2 class="section-title">Co ji bavilo</h2>
+      <p>Velmi ráda cestovala. Každé léto  se účastnila organizovaných týdenních pobytů v různých částech Československa a kromě toho jezdila na spoustu poznávacích zájezdů. Na každém takovém zájezdu nebo pobytu si o cestě psala poznámky do bločku, které pak za dlouhých zimních večerů pečlivě třídila a krasopisně přepisovala do malých sešitků.<p>
+
+<p> Nebyla bůhvíjaká kuchařka, ale její bramborové placky s povidly, kynuté švestkové knedlíky sypané mákem a škvarkové knedlíky s kysaným zelím vešly do rodinné historie. Pochutnávala si také na uleželých olomouckých syrečkách, aplikovaných na máslem namazaném krajíci čerstvého chleba a zapíjených pivem. Tuto aromatickou pochutinu ovšem směla konzumovat výhradně na lavičce na dvoře, do kuchyně ji s tím manžel Alois nepustil. 
+ </p>
+      <div class="interests">
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERIE ================= -->
+  <section class="fade-in">
+    <div class="section-inner">.jpg
+      <p class="eyebrow">Fotografie</p>
+      <h2 class="section-title">Ze života</h2>
+      <div class="gallery">
+        <figure>
+          <img src="Fotky-Marie-N/Prijmani-MN.jpg" alt="První přijímání">
+          <figcaption>První přijímání, asi 1918</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/Marie-na-ulici.jpg" alt="Marie na ulici">
+          <figcaption>Marie v Brně, kolem 1929</figcaption>
+        </figure>
+         <figure>
+          <img src="Fotky-Marie-N/Portret-MN-1.jpg" alt="/Portrét Marie">
+          <figcaption>Portrét Marie asi 1942</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-a-vnuk.jpg" alt="Marie a vnuk">
+          <figcaption>Marie a vnuk Michal, asi 1970</figcaption>
+        </figure>
+         <figure>
+          <img src="Fotky-Marie-N/MN-na-svatbe.jpg" alt="Marie na svatbe">
+          <figcaption>Marie na svatbe, 1982</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-a-AN.jpg" alt="Marie a Alois">
+          <figcaption>Marie s manželem, 1982</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-a-AN-2.jpg" alt="Marie a Alois 2">
+          <figcaption>Marie s manželem, 1983</figcaption>
+        </figure>
+         <figure>
+          <img src="Fotky-Marie-N/Zapisky-z-cest.jpg" alt="Zapisky">
+          <figcaption>Zápisky z cest</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-za-katedrou.jpg" alt="Za katedrou">
+          <figcaption>Paní učitelka za katedrou</figcaption>
+        </figure>
+         <figure>
+          <img src="Fotky-Marie-N/MN-kreslo.jpg" alt="Na zámku">
+          <figcaption>Na zámku v Líšni,1992</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-v-satku.jpg" alt="V šátku">
+          <figcaption>Doma na dvorku,1993</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Marie-N/MN-zahrada.jpg" alt="Na zahradě">
+          <figcaption>Na zahradě, poslední foto 1995</figcaption>
+        </figure>
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATIČKA ================= -->
+  <footer class="fade-in">
+    <svg class="candle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2 C13 5 15 6.5 15 9 C15 10.5 13.5 12 12 12 C10.5 12 9 10.5 9 9 C9 6.5 11 5 12 2Z" fill="currentColor"/>
+      <rect x="10" y="12" width="4" height="9" rx="0.5" fill="currentColor" opacity="0.85"/>
+      <rect x="8" y="21" width="8" height="1.6" rx="0.8" fill="currentColor" opacity="0.6"/>
+    </svg>
+    <p class="dedication">S láskou vzpomíná rodina</p>
+    <a class="back-link" href="index.html">← Zpět na rodinnou stránku</a>
+  </footer>
+
+</div>
+
+<script>
+  // jemné najetí sekcí při scrollu (respektuje prefers-reduced-motion přes CSS výše)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

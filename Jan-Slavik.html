@@ -1,0 +1,355 @@
+.jpg<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jan Slavík — Vzpomínka</title>
+<style>
+
+  :root{
+    --paper: #F0EDE4;
+    --card:  #FAF7EF;
+    --ink:   #2A2E28;
+    --moss:  #5C6B52;
+    --brass: #A8834F;
+    --line:  #D9D2C0;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif", Georgia, serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- typografie ---------- */
+  h1, h2, .display{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    font-weight: 600;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.hero{
+    padding: 64px 24px 40px;
+    text-align: center;
+  }
+
+  .portrait{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto 28px;
+    object-fit: cover;
+    object-position: center 5%;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 12px 28px -12px rgba(42,46,40,0.35);
+  }
+
+  .name{
+    font-size: clamp(2.1rem, 7vw, 2.75rem);
+    line-height: 1.15;
+  }
+
+  .dates{
+    margin-top: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    color: var(--brass);
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+
+  .epitaph{
+    margin-top: 22px;
+    font-style: italic;
+    color: var(--moss);
+    font-size: 1.02rem;
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- oddělovač: větvička ---------- */
+  .sprig{
+    display:flex;
+    justify-content:center;
+    margin: 44px 0;
+    color: var(--moss);
+    opacity: 0.75;
+  }
+  .sprig svg{ width: 92px; height: 22px; }
+
+  /* ---------- sekce ---------- */
+  section{
+    padding: 0 0 8px;
+  }
+
+  section + section{ margin-top: 8px; }
+
+  .section-inner{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+  }
+
+  h2.section-title{
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  p{ margin-bottom: 14px; font-size: 1.03rem;}
+  p:last-child{ margin-bottom: 0; }
+
+  /* ---------- záliby jako "tagy" ---------- */
+  .interests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .interest{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.88rem;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--moss);
+    background: var(--paper);
+  }
+
+  /* ---------- galerie ---------- */
+  .gallery{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery img{
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: contain;
+    background: var(--paper);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .gallery figcaption{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.76rem;
+    color: var(--moss);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ---------- patička ---------- */
+  footer{
+    text-align: center;
+    padding: 56px 24px 72px;
+  }
+
+  .candle{ width: 34px; height: 34px; margin: 0 auto 18px; color: var(--brass); }
+
+  .dedication{
+    font-style: italic;
+    color: var(--moss);
+    font-size: 0.98rem;
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top: 26px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 3px;
+  }
+
+  /* ---------- jemné najetí při scrollu ---------- */
+  .fade-in{
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fade-in{ opacity: 1; transform: none; transition: none; }
+  }
+
+  @media (max-width: 420px){
+    .section-inner{ padding: 26px 20px; }
+    header.hero{ padding: 48px 20px 32px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <img class="portrait" src="Fotky-Jan/JS-portret-40.jpg" alt="Portrét jana Slavíka">
+    <h1 class="name display">Jan Slavík</h1>
+    <p class="dates">1919 – 1995</p>
+    <p class="epitaph"></p>
+  </header>
+
+  <div class="sprig" aria-hidden="true">
+    <svg viewBox="0 0 92 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 11 H90" stroke="currentColor" stroke-width="1"/>
+      <path d="M46 11 C44 6 40 4 36 4 C40 8 43 10 46 11 C43 12 40 14 36 18 C40 18 44 16 46 11Z" fill="currentColor" opacity="0.9"/>
+      <circle cx="46" cy="11" r="1.6" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <!-- ================= ŽIVOT ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Život</p>
+      <h2 class="section-title">Trpký život cukráře</p>
+      <p> <p>Jan Slavík  se narodil v Bzenci jako nejstarší syn do rodiny účetního. Rodičům se později narodila ještě dcera Věra, ale matka Růžena velmi brzy zemřela. Otec Jakub   se znovu oženil s dívkou, která v domě pracovala jako hospodyně a s ní měl ještě syny Jiřího a Miloše. Po skončení základní školy se Jan začal učit cukrářem ve Veselí  nad Moravou. Po vyučení si to namířil do Brna, kde dostal místo v cukrárně U Sedláčka (dosud fungující cukrárna, dnes pod jménem Zemanova) v Josefské ulici. <p> 
+
+ <p>Zde se seznámil s Františkou Wellnerovou, kterou si vzal za manželku. V roce 1942 se jim narodila dcera Věra, o dva roky později druhá dcera Jana. Válečné období bylo pro rodinu složité, Jan byl totálně nasazen nejprve v Štrasburgu a poté  v letecké továrně Messerschmitt v rakouském Wiener Neustadt. Po bombardování továrny spojeneckým letectvem v závěru války z objektu utekl a už zůstal v Brně.<p>
+
+ <p>Po válce se rozhodl postavit na vlastní nohy. Za finanční pomoci příbuzných si pronajal prostory a zařídil cukrářskou výrobnu v Rajhradě. Místo nebylo zvoleno náhodou, benediktinský klášter v Rajhradě a jeho návštěvníci byli  velkými odběrateli cukrářských výrobků. Tvrdě pracoval, aby ušetřil čas za cesty do Brna, spával v cukrárně na stole. Podniku se dařilo, Jan splácel příbuzným půjčku. Příběh bohužel neměl happyend. Po nástupu komunistů v roce 1948 byla výrobna uzavřena a stroje zabaveny. Ještě mnoho let pak tyto stroje rezavěly bez jakéhokoliv využití na dvoře domu. <p>
+
+ <p>Nesplacená část úvěru ovšem Janovi zůstala. Proto musel nastoupit počátkem 50.let 20. století jako horník do dolů v Žeravicích.  Později se vrátil do Brna, kde pracoval jako dělník v provozovně Sběrných surovin společně s manželkou. Poté přešel do sběrny surovin v Králově Poli a až do 70. let 20. století pracoval jako vedoucí provozu Sběrných surovin na Malé Klajdovce. <p>  
+
+<p>Následně nastoupil k podniku GeoTest a  na různých moravských lokalitách dozoroval čerpání vodních vrtů. V obytné maringotce strávil s manželkou Františkou na příslušné lokalitě vždy několik měsíců a poté se přestěhoval na nové místo. Tento kočovný život  mu zřejmě vyhovoval,  u hydrologů pracoval až do 90. let 20. století.
+
+
+ </p>
+    </div>
+  </section>
+
+  <!-- ================= ZÁLIBY ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Záliby a zajímavosti</p>
+      <h2 class="section-title">Co jej bavilo</h2>
+      <p> Přestože se profesionálně k cukrářskému řemeslu nikdy nevrátil,  doma pekl často a rád. Jeho mistrovským kouskem byly piškotové rolády. Piškotové těsto přitom pekl na novinovém papíru (pečicí papír byl tehdy nedostupný) a vždy se chlubil tím, že po upečení v troubě a sloupnutí upečeného těsta se noviny daly pohodlně přečíst. Byl náruživým čtenářem, knihovnu měl plnou české i zahraniční klasické literatury. S manželkou Františkou rádi navštěvovali Luhačovice nebo Mariánské Lázně.
+ </p>
+      <div class="interests">
+       
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALERIE ================= -->
+  <section class="fade-in">
+    <div class="section-inner">
+      <p class="eyebrow">Fotografie</p>
+      <h2 class="section-title">Ze života</h2>
+      <div class="gallery">
+       <figure>
+          <img src="Fotky-Jan/JS-v-uceni1.jpg" alt="S mistrem 1">
+          <figcaption>S mistrem cukrářem, 1935</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-v-uceni2.jpg" alt="Sladký výrobek">
+          <figcaption>Sladký výrobek, 1936</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-Strasbourg.jpg" alt="Štrasburk, 1944">
+          <figcaption>Totální nasazení, Štrasburk 1944</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-rozjimani-40.jpg" alt="Rozjímání, 1944">
+          <figcaption>Rozjímání s maželkou, 1944</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-v-Dubnanech-50.jpg" alt="S rodinou v Dubňanech, 50. léta">
+          <figcaption>S rodinou v Dubňanech, 50.léta</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-Sberna1.jpg" alt="Sběrna, 50.léta">
+          <figcaption>Sběrné suroviny,50. léta</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-a-FS-M.Lazne.jpg" alt="Mariánské Lázně, 50.léta">
+          <figcaption>\Mariánské Lázně, 50. léta</figcaption>
+        </figure>
+        <figure>
+          <img src="Fotky-Jan/JS-a-FS-Praha-60.jpg" alt="S manželkou v Praze, 60.léta">
+          <figcaption>S manželkou v Praze, 60.léta</figcaption>
+        </figure> 
+        <figure>
+          <img src="Fotky-Jan/Sberne-suroviny-1970.jpg" alt="sberné suroviny, 1970">
+          <figcaption>Sběrné suroviny, 1970</figcaption>
+        </figure>  
+        <figure>
+          <img src="Fotky-Jan/JS-maringotka-75.jpg" alt="Maringotka, 1975">
+          <figcaption>V  maringotce s vnukem, 1975</figcaption>
+        </figure>             
+        <figure>
+          <img src="Fotky-Jan/JS-s-rodinou-87.jpg" alt="S rodinou, 1987">
+          <figcaption>S rodinou, 1987</figcaption>
+        </figure>                    
+        <figure>
+          <img src="Fotky-Jan/JS-maringotka-88.jpg" alt="V maringotce, 1987">
+          <figcaption>V maringotce, 1987</figcaption>
+        </figure>      
+        <figure>
+          <img src="Fotky-Jan/JS-a-FS-87.jpg" alt="S manželkou, 1988">
+          <figcaption>S manželkou, 1987</figcaption>
+        </figure>    
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PATIČKA ================= -->
+  <footer class="fade-in">
+    <svg class="candle" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 2 C13 5 15 6.5 15 9 C15 10.5 13.5 12 12 12 C10.5 12 9 10.5 9 9 C9 6.5 11 5 12 2Z" fill="currentColor"/>
+      <rect x="10" y="12" width="4" height="9" rx="0.5" fill="currentColor" opacity="0.85"/>
+      <rect x="8" y="21" width="8" height="1.6" rx="0.8" fill="currentColor" opacity="0.6"/>
+    </svg>
+    <p class="dedication">S láskou vzpomíná rodina</p>
+    <a class="back-link" href="index.html">← Zpět na rodinnou stránku</a>
+  </footer>
+
+</div>
+
+<script>
+  // jemné najetí sekcí při scrollu (respektuje prefers-reduced-motion přes CSS výše)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
